@@ -1,10 +1,12 @@
 # remaro_uw_sim
 ROS and gazebo-based underwater simulation for the REMARO project.
 Currently, the simulator includes an underwater environment with a bop panel (from uuv simulator) and a BlueROV2 robot.
+
 #TODO: 
-    - generate a 3D environment for pipeline inspection.
-    - integrate more robots, if required for the project.
-    - integrate a controller for the robot, either autonomous or teleoperated.
+
+- generate a 3D environment for pipeline inspection.
+- integrate more robots, if required for the project.
+- integrate a controller for the robot, either autonomous or teleoperated.
 
 
 ## Getting Started
