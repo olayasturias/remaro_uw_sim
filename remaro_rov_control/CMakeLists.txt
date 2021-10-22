@@ -8,6 +8,6 @@ find_package(catkin REQUIRED)
 
 catkin_package()
 
-install(DIRECTORY launch config
+install(DIRECTORY launch config src
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
         PATTERN "*~" EXCLUDE)

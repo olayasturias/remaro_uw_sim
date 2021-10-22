@@ -1,0 +1,12 @@
+<launch>
+  <!-- Start new world -->
+  <include file="$(find uuv_gazebo_worlds)/launch/ocean_waves.launch"/>
+
+  <!-- Start your vehicle -->
+  <include file="$(find remaro_rov_models)/launch/upload_bluerov2.launch"/>
+
+  <!-- Reset the TAM matrix -->
+  <include file="$(find remaro_rov_control)/launch/bluerov2_thruster_manager.launch">
+    <arg name="reset_tam" value="true"/>
+  </include>
+</launch>

@@ -9,9 +9,9 @@
   -->
   <arg name="timeout" default="-1" />
   <arg name="reset_tam" default="false"/>
-  <arg name="output_dir" default="$(find remaro_rov_control)/config/bluerov2"/>
-  <arg name="config_file" default="$(find remaro_rov_control)/config/bluerov2/thruster_manager.yaml"/>
-  <arg name="tam_file" default="$(find remaro_rov_control)/config/bluerov2/TAM.yaml"/>
+  <arg name="output_dir" default="$(find remaro_rov_control)/config/$(arg model_name)"/>
+  <arg name="config_file" default="$(find remaro_rov_control)/config/$(arg model_name)/thruster_manager.yaml"/>
+  <arg name="tam_file" default="$(find remaro_rov_control)/config/$(arg model_name)/TAM.yaml"/>
 
   <include file="$(find uuv_thruster_manager)/launch/thruster_manager.launch">
     <arg name="model_name" value="$(arg model_name)"/>
