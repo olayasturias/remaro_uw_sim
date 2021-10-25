@@ -15,10 +15,8 @@ Currently, the simulator includes an underwater environment with a bop panel (fr
 - git
 - [ros-\*-desktop-full](http://wiki.ros.org/ROS/Installation)
   - currently tested on ROS mellodic and Ubuntu 18.04
-- python
-  - opencv_python
-  - numpy
-- [uuv simulator](https://uuvsimulator.github.io/)
+- [uuv simulator](https://uuvsimulator.github.io/) Installation:
+   - `$ sudo apt install ros-melodic-uuv-simulator`
 
 
 ### Installation ###
@@ -36,7 +34,7 @@ Currently, the simulator includes an underwater environment with a bop panel (fr
 You can either use any of the launch files that already does the job for you of launching both the world environment and the robot, or you can manually do it yourself :wink:
 
 - remaro_uw_sim launchers:
-    #TODO
+    - `$ roslaunch remaro_uw_sim uuv_simulator.launch`
 
 - Manually launching a world and spawning the robot:
     1. Launch gazebo with the UUV Simulator environment 
