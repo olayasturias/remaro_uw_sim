@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find bluerov2_gazebo)/launch/start_demo_pid_controller.launch">
+      <arg name="x" default="3"/>
+      <arg name="y" default="5"/>
+      <arg name="z" default="-59"/>
+      <arg name="yaw" default="3.1415926535897931"/>
+      <arg name="teleop_on" default="true"/>
+      <arg name="joy_id" default="0" doc="Joystick ID"/>
+      <arg name="world" default="$(find uuv_gazebo_worlds)/launch/subsea_bop_panel.launch" />
+  </include>
+
+
+</launch>

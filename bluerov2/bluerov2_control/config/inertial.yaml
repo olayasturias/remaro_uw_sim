@@ -1,0 +1,9 @@
+pid: # as seen in https://flex.flinders.edu.au/file/27aa0064-9de2-441c-8a17-655405d5fc2e/1/ThesisWu2018.pdf
+  mass: 11.5
+  inertial:
+    ixx: 0.16
+    ixy: 0
+    ixz: 0
+    iyy: 0.16
+    iyz: 0
+    izz: 0.16
