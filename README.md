@@ -34,7 +34,7 @@ Currently, the simulator includes an underwater environment with a bop panel (fr
 You can either use any of the launch files that already does the job for you of launching both the world environment and the robot, or you can manually do it yourself :wink:
 
 - remaro_uw_sim launchers:
-    - `$ roslaunch remaro_uw_sim bluerov2_joy_simulator.launch`
+    - `$ roslaunch uwsim bluerov2_joy_simulator.launch`
 
 - Manually launching a world and spawning the robot:
     1. Launch gazebo with the UUV Simulator environment 

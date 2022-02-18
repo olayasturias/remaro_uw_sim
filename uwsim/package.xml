@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>remaro_uw_sim</name>
+  <name>uwsim</name>
   <version>0.0.0</version>
-  <description>The remaro_uw_sim package</description>
+  <description>The uwsim package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
-  <maintainer email="olaya@ece.au.dk">Olaya Alvarez Tunon</maintainer>
+  <!-- Example:  -->
+  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
+  <maintainer email="olaya@todo.todo">olaya</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
@@ -17,7 +19,7 @@
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/remaro_uw_sim</url> -->
+  <!-- <url type="website">http://wiki.ros.org/uwsim</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->
@@ -47,8 +49,11 @@
   <!-- Use doc_depend for packages you need only for building documentation: -->
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
-    <exec_depend>bluerov2</exec_depend>
-    <exec_depend>uwsim</exec_depend>
-    <export><metapackage/></export>
 
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
 </package>
