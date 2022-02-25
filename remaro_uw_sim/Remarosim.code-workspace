@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../uuv_simulator"
+		}
+	],
+	"settings": {
+		"python.autoComplete.extraPaths": [
+			"/home/olaya/catkin_ws/install/lib/python2.7/dist-packages",
+			"/opt/ros/melodic/lib/python2.7/dist-packages",
+			"/home/olaya/catkin_ws/devel/lib/python2.7/dist-packages"
+		],
+		"python.analysis.extraPaths": [
+			"/home/olaya/catkin_ws/install/lib/python2.7/dist-packages",
+			"/opt/ros/melodic/lib/python2.7/dist-packages",
+			"/home/olaya/catkin_ws/devel/lib/python2.7/dist-packages"
+		]
+	}
+}
