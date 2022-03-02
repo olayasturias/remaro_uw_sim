@@ -1,0 +1,12 @@
+<launch>
+    <arg name="rov_model" default="rexrov2"/>
+
+    <!-- Load gazebo backend with physics motor without visuals 
+    <node name="gzserver" pkg="gazebo_ros" type="gzserver" respawn="false" />-->
+    <!-- Load uuv plugin without visuals-->
+    <include file="$(find uuv_gazebo_worlds)/launch/auv_underwater_world.launch">
+    <arg name="gui" value="false"/>
+    </include>
+    <!-- Load vehicle -->
+    <include file="$(find uwsim)/launch/spawn_$(arg rov_model).launch"/>
+</launch>

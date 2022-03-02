@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+
+    <include file="$(find rexrov2_description)/launch/upload_rexrov2.launch"/>
+
+</launch>

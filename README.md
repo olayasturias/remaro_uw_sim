@@ -8,10 +8,65 @@ Currently, the simulator includes an underwater environment with a bop panel (fr
 - integrate more robots, if required for the project.
 - integrate a controller for the robot, either autonomous or teleoperated.
 
+# 1. Running #
+Here we detail the different ways of simulating an underwater robot with gazebo, airsim or both. The ROS package remaro_uw_sim provides launchers that make the work easier for you.
 
-# 1. Requirements
+## 1.1 standalone Gazebo simulation
+You can either use any of the launch files that already does the job for you of launching both the world environment and the robot, or you can manually do it yourself
 
-### 1.1 ROS, Gazebo and UUV
+- remaro_uw_sim launchers:
+    - `$ roslaunch uwsim bluerov2_joy_simulator.launch`
+
+- Manually launching a world and spawning the robot:
+    1. Launch gazebo with the UUV Simulator environment 
+       - `$ roslaunch uuv_gazebo_worlds subsea_bop_panel.launch`
+    2. Spawn the robot
+       - `$ roslaunch bluerov2_description upload_bluerov2.launch`  
+
+## 1.2 AirSim & ROS
+
+Under AirSim you can find a ros workspace folder with ros packages that will bridge between your AirSim simulation and ROS.
+
+      ```
+      cd PATH_TO/AirSim/ros
+      catkin build 
+      source ./devel/setup.bash
+      ```
+
+## 1.3 AirSim visuals with Gazebo physics
+
+1. First, run the AirSim simulator:
+
+   - Open the Unreal Engine launcher:
+         ```
+         cd PATH_TO/UE4Launcher
+         npm start
+         ```
+   - Run your project. Remember to set the `GameMode Override` under the tab `World Settings` to `AirSimGameMode`.
+
+   - Play the simulation.
+
+2. Run the Gazebo simulation with your Gazebo model.
+
+      ```
+      roslaunch uwsim gazebo_backend.launch rov_model:=rexrov2
+      ```
+3. Run the GazeboDrone plugin.
+   - First, you will need to modify the `settings.json` file to indicate that you will use an external physics engine. Do it by adding the line : `"PhysicsEngineName":"ExternalPhysicsEngine"`.
+   - Run the plugin
+      ```
+      cd PATH_TO/AirSim/GazeboDrone/build
+      ./GazeboDrone
+      ```
+4. Get ROS topics from AirSim
+   - TODO
+# 2. Installation     
+
+To setup remaro_uw_sim in our computer, we will first install all the requirements, and afterwards install the package itself.
+
+## 2.1. Requirements
+
+### 2.1.1 ROS, Gazebo and UUV
 - [ros-\*-desktop-full](http://wiki.ros.org/ROS/Installation)
   - currently tested on ROS mellodic and Ubuntu 18.04
      - `$ sudo apt install ros-melodic-desktop-full`
@@ -37,7 +92,7 @@ Currently, the simulator includes an underwater environment with a bop panel (fr
    cd ~/catkin_ws
    catkin build
    ```
-### 1.2 Unreal Engine
+### 2.1.2 Unreal Engine
 - [Unreal Engine](https://docs.unrealengine.com/4.27/en-US/SharingAndReleasing/Linux/BeginnerLinuxDeveloper/SettingUpAnUnrealWorkflow/) a photorealistic rendering engine. 
 Follow the instructions in the link to create an epic games account. AirSim only supports Unreal >= 4.25. Clone and build it: 
 
@@ -57,7 +112,7 @@ Follow the instructions in the link to create an epic games account. AirSim only
       npm start
       ```
 
-### 1.3 AirSim
+### 2.1.3 AirSim
 - [GCC 8](https://askubuntu.com/questions/1028601/install-gcc-8-only-on-ubuntu-18-04). The AirSim plugin GazeboDrone requires to have AirSim compiled with GCC 8. If you are using Ubuntu 18.08, you probably have GCC 7. Both compilers can coexist, we will just install and set GCC 8 as default:
 
       ```
@@ -86,8 +141,10 @@ Clone and build it:
       ```  
 
 
+## 2.2 Installation
 
-# 2. Installation #
+Install the ROS packages for remaro_uw_sim as follows:
+
  1. Go to your ROS package source directory:
     - `$ cd catkin_ws/src`
  2. Clone this project.
@@ -97,28 +154,3 @@ Clone and build it:
       cd ~/catkin_ws
       catkin build remaro_uw_sim
       ```
-
-# 3. Running #
-## 3.1 standalone Gazebo simulation
-You can either use any of the launch files that already does the job for you of launching both the world environment and the robot, or you can manually do it yourself :wink:
-
-- remaro_uw_sim launchers:
-    - `$ roslaunch uwsim bluerov2_joy_simulator.launch`
-
-- Manually launching a world and spawning the robot:
-    1. Launch gazebo with the UUV Simulator environment 
-       - `$ roslaunch uuv_gazebo_worlds subsea_bop_panel.launch`
-    2. Spawn the robot
-       - `$ roslaunch bluerov2_description upload_bluerov2.launch`  
-
-## 3.2 AirSim & ROS
-
-Under AirSim you can find a ros workspace folder with ros packages that will bridge between your AirSim simulation and ROS.
-
-      ```
-      cd PATH_TO/AirSim/ros
-      catkin build
-      source ./devel/setup.bash
-      ```
-
-AirSim runs with the settings
