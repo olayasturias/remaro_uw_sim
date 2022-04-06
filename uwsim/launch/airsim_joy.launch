@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="rov_model" default="rexrov2"/>
+
+  <!-- joystick configuration -->
+  <arg name="joy_id" default="0"/>
+  <arg name="deadman_button" default="-1"/>
+  <arg name="exclusion_buttons" default="4,5"/>
+  <arg name="axis_roll" default="-1"/>
+  <arg name="axis_pitch" default="-1"/>
+  <arg name="axis_yaw" default="0"/>
+  <arg name="axis_x" default="4"/>
+  <arg name="axis_y" default="3"/>
+  <arg name="axis_z" default="1"/>
+  <arg name="gain_roll" default="0.0"/>
+  <arg name="gain_pitch" default="0.0"/>
+  <arg name="gain_yaw" default="0.2"/>
+  <arg name="gain_x" default="0.3"/>
+  <arg name="gain_y" default="0.3"/>
+  <arg name="gain_z" default="0.3"/>
+
+  <!-- <include file="$(find uwsim)/launch/gazebo_backend.launch">
+      <arg name="rov_model" default="$(arg rov_model)"/>
+  </include> -->
+  <node pkg="joy" type="joy_node" name="joystick">
+      <param name="autorepeat_rate" value="10"/>
+      <param name="dev" value="/dev/input/js$(arg joy_id)"/>
+  </node>
+
+  <node name="airsim_joy" pkg="uwsim" type="airsim_joy.py" output="screen" respawn="true">
+      <rosparam subst_value="true">
+        deadman_button: $(arg deadman_button)
+        exclusion_buttons: [$(arg exclusion_buttons)]
+        mapping:
+          x:
+            axis: $(arg axis_x)
+            gain: $(arg gain_x)
+          y:
+            axis: $(arg axis_y)
+            gain: $(arg gain_y)
+          z:
+            axis: $(arg axis_z)
+            gain: $(arg gain_z)
+          roll:
+            axis: $(arg axis_roll)
+            gain: $(arg gain_roll)
+          pitch:
+            axis: $(arg axis_pitch)
+            gain: $(arg gain_pitch)
+          yaw:
+            axis: $(arg axis_yaw)
+            gain: $(arg gain_yaw)
+      </rosparam>
+  </node>
+
+
+
+</launch>

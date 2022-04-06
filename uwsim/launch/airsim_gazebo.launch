@@ -1,0 +1,30 @@
+<launch>
+    <arg name="rov_model" default="rexrov2"/>
+    <arg name="gui" default="false"/>
+ 	<arg name="output" default="log"/>
+	<arg name="publish_clock" default="false"/>
+	<arg name="is_vulkan" default="true"/>
+	<arg name="host" default="localhost" />
+
+
+    <!-- Load gazebo backend with physics motor without visuals -->
+    <include file="$(find uwsim)/launch/gazebo_backend.launch">
+    <arg name="gui" value="false"/>
+    <arg name="rov_model" value="$(arg rov_model)"/>
+    </include>
+    <!-- Load airsim-ros bridge -->
+	<node name="airsim_node" pkg="airsim_ros_pkgs" type="airsim_node" output="$(arg output)">
+		<param name="is_vulkan" type="bool" value="false" /> 
+		<!-- ROS timer rates. Note that timer callback will be processed at maximum possible rate, upperbounded by the following ROS params -->
+		<param name="update_airsim_img_response_every_n_sec" type="double" value="0.05" /> 
+		<param name="update_airsim_control_every_n_sec" type="double" value="0.01" />
+		<param name="update_lidar_every_n_sec" type="double" value="0.01" />
+		<param name="publish_clock" type="bool" value="$(arg publish_clock)" />
+		<param name="host_ip" type="string" value="$(arg host)" />
+	</node>
+
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find airsim_ros_pkgs)/rviz/default.rviz" />
+
+    <!-- Static transforms for airsim node, aligning airsim tf with gazebo tf-->
+    <node pkg="tf" type="static_transform_publisher" name="ned_to_enu_pub" args="0 0 0 0 0 0 $(arg rov_model)/base_footprint world 100"/>
+</launch>

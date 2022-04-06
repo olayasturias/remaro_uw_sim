@@ -25,12 +25,9 @@ You can either use any of the launch files that already does the job for you of 
 
 ## 1.2 AirSim & ROS
 
-Under AirSim you can find a ros workspace folder with ros packages that will bridge between your AirSim simulation and ROS.
-
+run the airsim ROS packages, included in this repository:
       ```
-      cd PATH_TO/AirSim/ros
-      catkin build 
-      source ./devel/setup.bash
+      roslaunch airsim_ros_pkgs airsim_node.launch
       ```
 
 ## 1.3 AirSim visuals with Gazebo physics
@@ -59,7 +56,12 @@ Under AirSim you can find a ros workspace folder with ros packages that will bri
       ./GazeboDrone
       ```
 4. Get ROS topics from AirSim
-   - TODO
+   - Run the airsim ROS packages:
+      ```
+      roslaunch airsim_ros_pkgs airsim_node.launch
+      ```
+
+   
 # 2. Installation     
 
 To setup remaro_uw_sim in our computer, we will first install all the requirements, and afterwards install the package itself.
