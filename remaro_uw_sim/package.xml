@@ -16,6 +16,7 @@
   <buildtool_depend>catkin</buildtool_depend>
     <exec_depend>bluerov2</exec_depend>
     <exec_depend>uwsim</exec_depend>
+    <exec_depend>airsim_ros</exec_depend>
     <export><metapackage/></export>
 
 </package>

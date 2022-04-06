@@ -25,13 +25,7 @@ You can either use any of the launch files that already does the job for you of 
 
 ## 1.2 AirSim & ROS
 
-Under AirSim you can find a ros workspace folder with ros packages that will bridge between your AirSim simulation and ROS. Note that they are in a different workspace from your usual ROS workspace. Therefore, you will first need to source it:
-      ```
-      cd PATH_TO/AirSim/ros
-      catkin build 
-      source ./devel/setup.bash
-      ```
-And then run the airsim ROS packages:
+run the airsim ROS packages, included in this repository:
       ```
       roslaunch airsim_ros_pkgs airsim_node.launch
       ```
@@ -62,13 +56,7 @@ And then run the airsim ROS packages:
       ./GazeboDrone
       ```
 4. Get ROS topics from AirSim
-   - Note that the AirSim ros nodes are in a different workspace. Therefore, you will first need to source it:
-      ```
-      cd PATH_TO/AirSim/ros
-      catkin build 
-      source ./devel/setup.bash
-      ```
-   - And then run the airsim ROS packages:
+   - Run the airsim ROS packages:
       ```
       roslaunch airsim_ros_pkgs airsim_node.launch
       ```
