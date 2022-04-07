@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
     <arg name="rov_model" default="rexrov2"/>
     <arg name="gui" default="false"/>
