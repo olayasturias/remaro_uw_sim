@@ -10,9 +10,28 @@
     <!-- Load gazebo backend with physics motor without visuals 
     <node name="gzserver" pkg="gazebo_ros" type="gzserver" respawn="false" />-->
     <!-- Load uuv plugin without visuals-->
-    <include file="$(find uuv_gazebo_worlds)/launch/auv_underwater_world.launch">
+    <!-- <include file="$(find uuv_gazebo_worlds)/launch/auv_underwater_world.launch">
     <arg name="gui" value="false"/>
+    </include> -->
+
+    <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="worlds/blank.world"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+        <arg name="verbose" value="true"/>
     </include>
+
+
+    <group if="$(arg set_timeout)">
+        <include file="$(find uuv_assistants)/launch/set_simulation_timer.launch">
+            <arg name="timeout" value="$(arg timeout)"/>
+        </include>
+    </group>
+
 
 
     <!-- Load vehicle -->

@@ -347,7 +347,7 @@ private:
     GimbalCmd gimbal_cmd_;
 
     /// ROS tf
-    const std::string AIRSIM_FRAME_ID = "world_ned";
+    const std::string AIRSIM_FRAME_ID = "world_ned";//"rexrov2/base_footprint"; //"world_ned";
     std::string world_frame_id_ = AIRSIM_FRAME_ID;
     const std::string AIRSIM_ODOM_FRAME_ID = "odom_local_ned";
     const std::string ENU_ODOM_FRAME_ID = "odom_local_enu";
@@ -355,7 +355,11 @@ private:
     tf2_ros::TransformBroadcaster tf_broadcaster_;
     tf2_ros::StaticTransformBroadcaster static_tf_pub_;
 
-    bool isENU_ = false;
+    // Gazebo
+    std::string gazebo_rov_footprint_id_;
+
+    bool isENU_ = true;
+    bool invert_Z = true;
     tf2_ros::Buffer tf_buffer_;
     tf2_ros::TransformListener tf_listener_;
 

@@ -27,6 +27,12 @@ std::string AirSimSettingsParser::getSimMode()
     return settings_json.getString("SimMode", "");
 }
 
+std::string AirSimSettingsParser::getPhysicsEngine()
+{
+    Settings& settings_json = Settings::loadJSonString(settings_text_);
+    return settings_json.getString("PhysicsEngineName", "");
+}
+
 // mimics void ASimHUD::initializeSettings()
 bool AirSimSettingsParser::initializeSettings()
 {
@@ -35,6 +41,9 @@ bool AirSimSettingsParser::initializeSettings()
 
         AirSimSettings::singleton().load(std::bind(&AirSimSettingsParser::getSimMode, this));
         std::cout << "SimMode: " << AirSimSettings::singleton().simmode_name << std::endl;
+
+        AirSimSettings::singleton().load(std::bind(&AirSimSettingsParser::getPhysicsEngine, this));
+        std::cout << "Physics Engine: " << AirSimSettings::singleton().physics_engine_name << std::endl;
 
         return true;
     }

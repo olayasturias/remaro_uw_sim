@@ -93,10 +93,12 @@ void AirsimROSWrapper::initialize_ros()
     nh_private_.getParam("is_vulkan", is_vulkan_);
     nh_private_.getParam("update_airsim_control_every_n_sec", update_airsim_control_every_n_sec);
     nh_private_.getParam("publish_clock", publish_clock_);
+    nh_private_.getParam("is_ENU", isENU_);
+    nh_private_.param("gazebo_rov_frame_id", gazebo_rov_footprint_id_);    
     nh_private_.param("world_frame_id", world_frame_id_, world_frame_id_);
     odom_frame_id_ = world_frame_id_ == AIRSIM_FRAME_ID ? AIRSIM_ODOM_FRAME_ID : ENU_ODOM_FRAME_ID;
     nh_private_.param("odom_frame_id", odom_frame_id_, odom_frame_id_);
-    isENU_ = !(odom_frame_id_ == AIRSIM_ODOM_FRAME_ID);
+    // isENU_ = !(odom_frame_id_ == AIRSIM_ODOM_FRAME_ID);
     nh_private_.param("coordinate_system_enu", isENU_, isENU_);
     vel_cmd_duration_ = 0.05; // todo rosparam
     // todo enforce dynamics constraints in this node as well?
@@ -453,6 +455,7 @@ void AirsimROSWrapper::car_cmd_cb(const airsim_ros_pkgs::CarControls::ConstPtr& 
 
 msr::airlib::Pose AirsimROSWrapper::get_airlib_pose(const float& x, const float& y, const float& z, const msr::airlib::Quaternionr& airlib_quat) const
 {
+    std::cout << "get_airlib_pose(): \n" << std::endl;
     return msr::airlib::Pose(msr::airlib::Vector3r(x, y, z), airlib_quat);
 }
 
@@ -479,6 +482,7 @@ void AirsimROSWrapper::vel_cmd_body_frame_cb(const airsim_ros_pkgs::VelCmd::Cons
 
 void AirsimROSWrapper::vel_cmd_group_body_frame_cb(const airsim_ros_pkgs::VelCmdGroup& msg)
 {
+
     std::lock_guard<std::mutex> guard(drone_control_mutex_);
 
     for (const auto& vehicle_name : msg.vehicle_names) {
@@ -1125,28 +1129,52 @@ void AirsimROSWrapper::update_commands()
 // airsim uses nans for zeros in settings.json. we set them to zeros here for handling tfs in ROS
 void AirsimROSWrapper::set_nans_to_zeros_in_pose(VehicleSetting& vehicle_setting) const
 {
-    if (std::isnan(vehicle_setting.position.x()))
-        vehicle_setting.position.x() = 0.0;
+    std::cout << "set_nans_to_zeros_in_pose: \n" << std::endl;
+    if (AirSimSettings::singleton().physics_engine_name != "ExternalPhysicsEngine") {
+            if (std::isnan(vehicle_setting.position.x()))
+                vehicle_setting.position.x() = 0.0;
 
-    if (std::isnan(vehicle_setting.position.y()))
-        vehicle_setting.position.y() = 0.0;
+            if (std::isnan(vehicle_setting.position.y()))
+                vehicle_setting.position.y() = 0.0;
 
-    if (std::isnan(vehicle_setting.position.z()))
-        vehicle_setting.position.z() = 0.0;
+            if (std::isnan(vehicle_setting.position.z()))
+                vehicle_setting.position.z() = 0.0;
 
-    if (std::isnan(vehicle_setting.rotation.yaw))
-        vehicle_setting.rotation.yaw = 0.0;
+            if (std::isnan(vehicle_setting.rotation.yaw))
+                vehicle_setting.rotation.yaw = 0.0;
 
-    if (std::isnan(vehicle_setting.rotation.pitch))
-        vehicle_setting.rotation.pitch = 0.0;
+            if (std::isnan(vehicle_setting.rotation.pitch))
+                vehicle_setting.rotation.pitch = 0.0;
 
-    if (std::isnan(vehicle_setting.rotation.roll))
-        vehicle_setting.rotation.roll = 0.0;
+            if (std::isnan(vehicle_setting.rotation.roll))
+                vehicle_setting.rotation.roll = 0.0;
+        ROS_INFO("Running with AirSim physics, setting current pose to 0");
+    }
+    else {
+
+            vehicle_setting.position.x() = 0.0;
+
+ 
+            vehicle_setting.position.y() = 0.0;
+
+
+            vehicle_setting.position.z() = 0.0;
+
+
+            vehicle_setting.rotation.yaw = 0.0;
+
+            vehicle_setting.rotation.pitch = 0.0;
+
+
+            vehicle_setting.rotation.roll = 0.0;
+        ROS_INFO("Running with external physics, setting current pose to gazebo pose");
+    }
 }
 
 // if any nan's in camera pose, set them to match vehicle pose (which has already converted any potential nans to zeros)
 void AirsimROSWrapper::set_nans_to_zeros_in_pose(const VehicleSetting& vehicle_setting, CameraSetting& camera_setting) const
 {
+    std::cout << "set_nans_to_zeros_in_pose: \n" << std::endl;
     if (std::isnan(camera_setting.position.x()))
         camera_setting.position.x() = vehicle_setting.position.x();
 
@@ -1183,6 +1211,7 @@ void AirsimROSWrapper::append_static_vehicle_tf(VehicleROS* vehicle_ros, const V
     vehicle_tf_msg.transform.rotation.w = quat.w();
 
     if (isENU_) {
+        std::cout << "isENU:" << isENU_ << std::endl;
         std::swap(vehicle_tf_msg.transform.translation.x, vehicle_tf_msg.transform.translation.y);
         std::swap(vehicle_tf_msg.transform.rotation.x, vehicle_tf_msg.transform.rotation.y);
         vehicle_tf_msg.transform.translation.z = -vehicle_tf_msg.transform.translation.z;
@@ -1193,7 +1222,7 @@ void AirsimROSWrapper::append_static_vehicle_tf(VehicleROS* vehicle_ros, const V
 }
 
 void AirsimROSWrapper::append_static_lidar_tf(VehicleROS* vehicle_ros, const std::string& lidar_name, const msr::airlib::LidarSimpleParams& lidar_setting)
-{
+{    
     geometry_msgs::TransformStamped lidar_tf_msg;
     lidar_tf_msg.header.frame_id = vehicle_ros->vehicle_name + "/" + odom_frame_id_;
     lidar_tf_msg.child_frame_id = vehicle_ros->vehicle_name + "/" + lidar_name;

@@ -10,6 +10,7 @@
   <buildtool_depend>catkin</buildtool_depend>
   <exec_depend>airsim_ros_pkgs</exec_depend> 
   <exec_depend>airsim_tutorial_pkgs</exec_depend> 
+  <exec_depend>gazebodrone</exec_depend> 
 
   <export><metapackage/></export>
 </package>

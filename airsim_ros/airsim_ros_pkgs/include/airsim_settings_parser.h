@@ -26,6 +26,7 @@ public:
 
 private:
     std::string getSimMode();
+    std::string getPhysicsEngine();
     bool getSettingsText(std::string& settings_text) const;
     bool initializeSettings();
 
