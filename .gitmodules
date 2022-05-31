@@ -1,0 +1,3 @@
+[submodule "remaro_worlds"]
+	path = remaro_worlds
+	url = https://github.com/remaro-network/remaro_worlds.git

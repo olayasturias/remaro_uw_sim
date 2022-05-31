@@ -43,23 +43,12 @@ run the airsim ROS packages, included in this repository:
 
    - Play the simulation.
 
-2. Run the Gazebo simulation with your Gazebo model.
+2. Run the ROS launcher for the simulation. It launches the gazebo backend for the physics simulation, the airsim ROS packages, the GazeboDrone script for connecting gazebo and airsim, and the RViZ with all sensor data and robot model.
 
       ```
-      roslaunch uwsim gazebo_backend.launch rov_model:=rexrov2
+      roslaunch uwsim airsim_gazebo.launch rov_model:=rexrov2
       ```
-3. Run the GazeboDrone plugin.
-   - First, you will need to modify the `settings.json` file to indicate that you will use an external physics engine. Do it by adding the line : `"PhysicsEngineName":"ExternalPhysicsEngine"`.
-   - Run the plugin
-      ```
-      cd PATH_TO/AirSim/GazeboDrone/build
-      ./GazeboDrone
-      ```
-4. Get ROS topics from AirSim
-   - Run the airsim ROS packages:
-      ```
-      roslaunch airsim_ros_pkgs airsim_node.launch
-      ```
+
 
    
 # 2. Installation     

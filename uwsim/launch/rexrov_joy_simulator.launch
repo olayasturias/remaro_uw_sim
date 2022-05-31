@@ -4,10 +4,10 @@
     <arg name="use_ned_frame" default="false" doc="If true, uses the NED (North-East-Down) frame conversion. If false, ENU (East-North-Up) will be used per default."/>
 
     <!-- Vehicle's initial position -->
-    <arg name="x" default="3" doc="X coordinate of the vehicle's initial position (in ENU)"/>
-    <arg name="y" default="5" doc="Y coordinate of the vehicle's initial position (in ENU)"/>
-    <arg name="z" default="-59" doc="Z coordinate of the vehicle's initial position (in ENU)"/>
-    <arg name="yaw" default="3.1415926535897931" doc="Yaw angle of the vehicle's initial orientation"/>
+    <arg name="x" default="-3" doc="X coordinate of the vehicle's initial position (in ENU)"/>
+    <arg name="y" default="9" doc="Y coordinate of the vehicle's initial position (in ENU)"/>
+    <arg name="z" default="-55" doc="Z coordinate of the vehicle's initial position (in ENU)"/>
+    <arg name="yaw" default="-1.57" doc="Yaw angle of the vehicle's initial orientation"/>
 
     <arg name="teleop_on" default="true" doc="If true, the teleop node will be started"/>
     <arg name="joy_id" default="0" doc="Joystick ID"/>
