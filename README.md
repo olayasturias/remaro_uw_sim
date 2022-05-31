@@ -15,13 +15,15 @@ Here we detail the different ways of simulating an underwater robot with gazebo,
 You can either use any of the launch files that already does the job for you of launching both the world environment and the robot, or you can manually do it yourself
 
 - remaro_uw_sim launchers:
-    - `$ roslaunch uwsim bluerov2_joy_simulator.launch`
+   - `$ roslaunch uwsim hackaton.launch`
+
+    - `$ roslaunch uwsim rexrov2_joy_simulator.launch`
 
 - Manually launching a world and spawning the robot:
     1. Launch gazebo with the UUV Simulator environment 
-       - `$ roslaunch uuv_gazebo_worlds subsea_bop_panel.launch`
+       - `$ roslaunch remaro_worlds maze_world.launch`
     2. Spawn the robot
-       - `$ roslaunch bluerov2_description upload_bluerov2.launch`  
+       - `$ roslaunch rexrov2_description upload_rexrov2.launch x:=-41 y:=0 z:=-18`  
 
 ## 1.2 AirSim & ROS
 
