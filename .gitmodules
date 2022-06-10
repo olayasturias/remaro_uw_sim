@@ -1,3 +1,6 @@
 [submodule "rexrov2"]
 	path = rexrov2
 	url = https://github.com/olayasturias/rexrov2.git
+[submodule "remaro_worlds"]
+	path = remaro_worlds
+	url = https://github.com/olayasturias/remaro_worlds.git
