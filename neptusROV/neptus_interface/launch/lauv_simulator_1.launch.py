@@ -26,9 +26,9 @@ def generate_launch_description():
             'target_name': LaunchConfiguration('target_name')
          }]
       ),
-      IncludeLaunchDescription(
-      PythonLaunchDescriptionSource([os.path.join(
-         get_package_share_directory('imcpy_ros_bridge'), 'launch'),
-         '/lauv_simulator_1.launch.py'])
-      )
+      # IncludeLaunchDescription(
+      # PythonLaunchDescriptionSource([os.path.join(
+      #    get_package_share_directory('imcpy_ros_bridge'), 'launch'),
+      #    '/lauv_simulator_1.launch.py'])
+      # )
    ])

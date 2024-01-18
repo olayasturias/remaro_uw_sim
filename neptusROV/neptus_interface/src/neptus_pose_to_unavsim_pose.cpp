@@ -23,14 +23,12 @@ msr::airlib::MultirotorRpcLibClient client;
 class NeptusInterface : public rclcpp::Node
 {
     public:
-        NeptusInterface(const std::string &namespace_str) 
-        : Node("neptus_interface", namespace_str)
+        NeptusInterface() 
+        : Node("neptus_interface")
         {
-            // Create subscriber to local pose
-            // local_pose_sub = this->create_subscription<geometry_msgs::msg::PoseStamped>(
-                // "base_link", 10, std::bind(&NeptusInterface::local_pose_callback, this, std::placeholders::_1));
+            std::string namespace_str = get_namespace();
             local_pose_sub = this->create_subscription<geometry_msgs::msg::PoseStamped>(
-            "base_link",  // Replace with the topic name you want to subscribe to
+            namespace_str + "/from_imc/base_link",  // Replace with the topic name you want to subscribe to
             10,std::bind(&NeptusInterface::local_pose_callback, this, std::placeholders::_1));    
             RCLCPP_INFO(this->get_logger(), "Subscribed to topic: %s", local_pose_sub->get_topic_name());
         }
@@ -59,7 +57,7 @@ int main(int _argc, char** _argv)
     client.confirmConnection();
     // Create ROS node
     rclcpp::init(_argc, _argv);
-    rclcpp::spin(std::make_shared<NeptusInterface>("lauv_simulator_1"));
+    rclcpp::spin(std::make_shared<NeptusInterface>());
     rclcpp::shutdown();
     return 0;
 }
