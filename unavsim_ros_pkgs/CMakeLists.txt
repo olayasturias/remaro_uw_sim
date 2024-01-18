@@ -17,6 +17,7 @@ find_package(sensor_msgs REQUIRED)
 find_package(mavros_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(rosidl_typesupport_cpp REQUIRED)
 find_package(rosidl_default_runtime REQUIRED)
@@ -145,5 +146,16 @@ ament_export_dependencies(unavsim_interfaces)
 ament_export_include_directories(${INCLUDE_DIRS})
 ament_export_libraries(airsim_settings_parser pd_position_controller_simple
   airsim_ros)
+
+# Install Python modules
+ament_python_install_package(${PROJECT_NAME})
+
+# Install Python executables
+install(PROGRAMS
+  scripts/mimir_recorder.py
+  scripts/helpers.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 
 ament_package()
