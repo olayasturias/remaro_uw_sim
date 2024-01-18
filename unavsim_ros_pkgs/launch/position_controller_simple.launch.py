@@ -5,7 +5,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     ld = launch.LaunchDescription([
             Node(
-                package='airsim_ros_pkgs',
+                package='unavsim_ros_pkgs',
                 executable='pd_position_controller_simple_node',
                 name='pid_position_node',
                 output='screen',

@@ -7,7 +7,7 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
 
-    pkg_share = get_package_share_directory('airsim_ros_pkgs')
+    pkg_share = get_package_share_directory('unavsim_ros_pkgs')
     default_rviz_path = os.path.join(pkg_share, 'rviz/default.rviz')
 
     ld = launch.LaunchDescription([

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>airsim_interfaces</name>
+  <name>unavsim_interfaces</name>
   <version>0.1.0</version>
   <description>Contains message and service definitions used by the examples.</description>
   <maintainer email="a@a.com">AAA</maintainer>

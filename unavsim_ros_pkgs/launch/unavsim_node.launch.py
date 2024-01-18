@@ -26,11 +26,11 @@ def generate_launch_description():
     host = DeclareLaunchArgument(
         "host",
         default_value='localhost')
-    print("launching airsim_node with host: ", host.default_value)
-    airsim_node = Node(
-            package='airsim_ros_pkgs',
-            executable='airsim_node',
-            name='airsim_node',
+    print("launching unavsim_node with host: ", host.default_value)
+    unavsim_node = Node(
+            package='unavsim_ros_pkgs',
+            executable='unavsim_node',
+            name='unavsim_node',
             output='screen',
             parameters=[{
                 'is_vulkan': False,
@@ -43,7 +43,7 @@ def generate_launch_description():
 
     static_transforms = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('airsim_ros_pkgs'), 'launch/static_transforms.launch.py')
+            os.path.join(get_package_share_directory('unavsim_ros_pkgs'), 'launch/static_transforms.launch.py')
         )
     )
 
@@ -57,6 +57,6 @@ def generate_launch_description():
     ld.add_action(host)
   
     ld.add_action(static_transforms)
-    ld.add_action(airsim_node)
+    ld.add_action(unavsim_node)
 
     return ld

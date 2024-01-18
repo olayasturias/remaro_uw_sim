@@ -8,8 +8,8 @@ import rospy
 import threading
 import sensor_msgs
 import sensor_msgs.msg
-import airsim_ros_pkgs as air
-import airsim_ros_pkgs.msg
+import unavsim_ros_pkgs as air
+import unavsim_ros_pkgs.msg
 
 class CarCommandTranslator(object):
     def __init__(self):
@@ -69,7 +69,7 @@ class CarCommandTranslator(object):
         if joy is None:
             return
 
-        controls = airsim_ros_pkgs.msg.CarControls()
+        controls = unavsim_ros_pkgs.msg.CarControls()
 
         controls.steering = self.steer_sign * self.max_curvature * joy.axes[2]
         u = joy.axes[1] * self.throttle_brake_sign

@@ -51,7 +51,7 @@ void PIDPositionController::reset_errors()
 
 void PIDPositionController::initialize_ros()
 {
-    vel_cmd_ = airsim_interfaces::msg::VelCmd();
+    vel_cmd_ = unavsim_interfaces::msg::VelCmd();
     // ROS params
     double update_control_every_n_sec;
     nh_->get_parameter("update_control_every_n_sec", update_control_every_n_sec);
@@ -73,16 +73,16 @@ void PIDPositionController::initialize_ros()
     }
 
     // ROS publishers
-    airsim_vel_cmd_world_frame_pub_ = nh_->create_publisher<airsim_interfaces::msg::VelCmd>("/airsim_node/" + vehicle_name + "/vel_cmd_world_frame", 1);
+    airsim_vel_cmd_world_frame_pub_ = nh_->create_publisher<unavsim_interfaces::msg::VelCmd>("/airsim_node/" + vehicle_name + "/vel_cmd_world_frame", 1);
 
     // ROS subscribers
     airsim_odom_sub_ = nh_->create_subscription<nav_msgs::msg::Odometry>("/airsim_node/" + vehicle_name + "/odom_local_ned", 50, std::bind(&PIDPositionController::airsim_odom_cb, this, _1));
-    home_geopoint_sub_ = nh_->create_subscription<airsim_interfaces::msg::GPSYaw>("/airsim_node/home_geo_point", 50, std::bind(&PIDPositionController::home_geopoint_cb, this, _1));
+    home_geopoint_sub_ = nh_->create_subscription<unavsim_interfaces::msg::GPSYaw>("/airsim_node/home_geo_point", 50, std::bind(&PIDPositionController::home_geopoint_cb, this, _1));
     // todo publish this under global nodehandle / "airsim node" and hide it from user
-    local_position_goal_srvr_ = nh_->create_service<airsim_interfaces::srv::SetLocalPosition>("/airsim_node/local_position_goal", std::bind(&PIDPositionController::local_position_goal_srv_cb, this, _1, _2));
-    local_position_goal_override_srvr_ = nh_->create_service<airsim_interfaces::srv::SetLocalPosition>("/airsim_node/local_position_goal/override", std::bind(&PIDPositionController::local_position_goal_srv_override_cb, this, _1, _2));
-    gps_goal_srvr_ = nh_->create_service<airsim_interfaces::srv::SetGPSPosition>("/airsim_node/gps_goal", std::bind(&PIDPositionController::gps_goal_srv_cb, this, _1, _2));
-    gps_goal_override_srvr_ = nh_->create_service<airsim_interfaces::srv::SetGPSPosition>("/airsim_node/gps_goal/override", std::bind(&PIDPositionController::gps_goal_srv_override_cb, this, _1, _2));
+    local_position_goal_srvr_ = nh_->create_service<unavsim_interfaces::srv::SetLocalPosition>("/airsim_node/local_position_goal", std::bind(&PIDPositionController::local_position_goal_srv_cb, this, _1, _2));
+    local_position_goal_override_srvr_ = nh_->create_service<unavsim_interfaces::srv::SetLocalPosition>("/airsim_node/local_position_goal/override", std::bind(&PIDPositionController::local_position_goal_srv_override_cb, this, _1, _2));
+    gps_goal_srvr_ = nh_->create_service<unavsim_interfaces::srv::SetGPSPosition>("/airsim_node/gps_goal", std::bind(&PIDPositionController::gps_goal_srv_cb, this, _1, _2));
+    gps_goal_override_srvr_ = nh_->create_service<unavsim_interfaces::srv::SetGPSPosition>("/airsim_node/gps_goal/override", std::bind(&PIDPositionController::gps_goal_srv_override_cb, this, _1, _2));
 
     // ROS timers
     update_control_cmd_timer_ = nh_->create_wall_timer(std::chrono::duration<double>(update_control_every_n_sec), std::bind(&PIDPositionController::update_control_cmd_timer_cb, this));
@@ -112,7 +112,7 @@ void PIDPositionController::check_reached_goal()
         reached_goal_ = true;
 }
 
-bool PIDPositionController::local_position_goal_srv_cb(const std::shared_ptr<airsim_interfaces::srv::SetLocalPosition::Request> request, std::shared_ptr<airsim_interfaces::srv::SetLocalPosition::Response> response)
+bool PIDPositionController::local_position_goal_srv_cb(const std::shared_ptr<unavsim_interfaces::srv::SetLocalPosition::Request> request, std::shared_ptr<unavsim_interfaces::srv::SetLocalPosition::Response> response)
 {
     unused(response);
     // this tells the update timer callback to not do active hovering
@@ -145,7 +145,7 @@ bool PIDPositionController::local_position_goal_srv_cb(const std::shared_ptr<air
     return false;
 }
 
-bool PIDPositionController::local_position_goal_srv_override_cb(const std::shared_ptr<airsim_interfaces::srv::SetLocalPosition::Request> request, std::shared_ptr<airsim_interfaces::srv::SetLocalPosition::Response> response)
+bool PIDPositionController::local_position_goal_srv_override_cb(const std::shared_ptr<unavsim_interfaces::srv::SetLocalPosition::Request> request, std::shared_ptr<unavsim_interfaces::srv::SetLocalPosition::Response> response)
 {
     unused(response);
     // this tells the update timer callback to not do active hovering
@@ -166,7 +166,7 @@ bool PIDPositionController::local_position_goal_srv_override_cb(const std::share
     return true;
 }
 
-void PIDPositionController::home_geopoint_cb(const airsim_interfaces::msg::GPSYaw::SharedPtr gps_msg)
+void PIDPositionController::home_geopoint_cb(const unavsim_interfaces::msg::GPSYaw::SharedPtr gps_msg)
 {
     if (has_home_geo_)
         return;
@@ -177,7 +177,7 @@ void PIDPositionController::home_geopoint_cb(const airsim_interfaces::msg::GPSYa
 }
 
 // todo do relative altitude, or add an option for the same?
-bool PIDPositionController::gps_goal_srv_cb(const std::shared_ptr<airsim_interfaces::srv::SetGPSPosition::Request> request, std::shared_ptr<airsim_interfaces::srv::SetGPSPosition::Response> response)
+bool PIDPositionController::gps_goal_srv_cb(const std::shared_ptr<unavsim_interfaces::srv::SetGPSPosition::Request> request, std::shared_ptr<unavsim_interfaces::srv::SetGPSPosition::Response> response)
 {
     if (!has_home_geo_) {
         RCLCPP_ERROR_STREAM(nh_->get_logger(), "I don't have home GPS coord. Can't go to GPS goal!");
@@ -227,7 +227,7 @@ bool PIDPositionController::gps_goal_srv_cb(const std::shared_ptr<airsim_interfa
 }
 
 // todo do relative altitude, or add an option for the same?
-bool PIDPositionController::gps_goal_srv_override_cb(const std::shared_ptr<airsim_interfaces::srv::SetGPSPosition::Request> request, std::shared_ptr<airsim_interfaces::srv::SetGPSPosition::Response> response)
+bool PIDPositionController::gps_goal_srv_override_cb(const std::shared_ptr<unavsim_interfaces::srv::SetGPSPosition::Request> request, std::shared_ptr<unavsim_interfaces::srv::SetGPSPosition::Response> response)
 {
     if (!has_home_geo_) {
         RCLCPP_ERROR_STREAM(nh_->get_logger(), "I don't have home GPS coord. Can't go to GPS goal!");

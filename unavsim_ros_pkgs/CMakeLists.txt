@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(airsim_ros_pkgs)
+project(unavsim_ros_pkgs)
 
 find_package(rclcpp REQUIRED)
 find_package(nav_msgs REQUIRED)
@@ -20,7 +20,7 @@ find_package(ament_cmake REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(rosidl_typesupport_cpp REQUIRED)
 find_package(rosidl_default_runtime REQUIRED)
-find_package(airsim_interfaces REQUIRED)
+find_package(unavsim_interfaces REQUIRED)
 find_package(OpenCV REQUIRED)
 
 set(AIRSIM_ROOT $ENV{HOME}/dev/UNav-Sim)
@@ -59,7 +59,7 @@ ament_target_dependencies(pd_position_controller_simple
   rclcpp
   nav_msgs
   geometry_msgs
-  airsim_interfaces
+  unavsim_interfaces
   tf2
   tf2_ros
   tf2_geometry_msgs
@@ -75,7 +75,7 @@ ament_target_dependencies(airsim_ros
   image_transport
   tf2_ros
   cv_bridge
-  airsim_interfaces
+  unavsim_interfaces
   mavros_msgs
   std_srvs
   tf2_geometry_msgs
@@ -83,9 +83,9 @@ ament_target_dependencies(airsim_ros
   tf2
 )
 
-add_executable(airsim_node src/airsim_node.cpp)
-target_link_libraries(airsim_node airsim_ros AirLib)
-ament_target_dependencies(airsim_node 
+add_executable(unavsim_node src/unavsim_node.cpp)
+target_link_libraries(unavsim_node airsim_ros AirLib)
+ament_target_dependencies(unavsim_node 
   rclcpp
 )
 
@@ -101,13 +101,13 @@ ament_target_dependencies(pd_position_controller_simple_node
   tf2_geometry_msgs
 )
 
-# rosidl_target_interfaces(airsim_node
+# rosidl_target_interfaces(unavsim_node
 # ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 # rosidl_target_interfaces(pd_position_controller_simple_node
 #   ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
-install(TARGETS airsim_node pd_position_controller_simple_node
+install(TARGETS unavsim_node pd_position_controller_simple_node
   DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS airsim_ros pd_position_controller_simple
@@ -140,7 +140,7 @@ ament_export_dependencies(rosidl_default_generators)
 ament_export_dependencies(ament_cmake)
 ament_export_dependencies(std_msgs)
 ament_export_dependencies(rosidl_default_runtime)
-ament_export_dependencies(airsim_interfaces)
+ament_export_dependencies(unavsim_interfaces)
 
 ament_export_include_directories(${INCLUDE_DIRS})
 ament_export_libraries(airsim_settings_parser pd_position_controller_simple

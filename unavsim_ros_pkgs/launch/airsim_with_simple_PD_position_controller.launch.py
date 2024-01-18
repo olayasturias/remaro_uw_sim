@@ -11,19 +11,19 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory(
-                    'airsim_ros_pkgs'), 'launch/airsim_node.launch.py')
+                    'unavsim_ros_pkgs'), 'launch/unavsim_node.launch.py')
             )
         ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory(
-                    'airsim_ros_pkgs'), 'launch/dynamic_constraints.launch.py')
+                    'unavsim_ros_pkgs'), 'launch/dynamic_constraints.launch.py')
             )
         ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory(
-                    'airsim_ros_pkgs'), 'launch/position_controller_simple.launch.py')
+                    'unavsim_ros_pkgs'), 'launch/position_controller_simple.launch.py')
             )
         )
     ])

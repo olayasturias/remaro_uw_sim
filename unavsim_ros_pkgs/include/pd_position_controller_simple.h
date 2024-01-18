@@ -20,10 +20,10 @@ STRICT_MODE_OFF //todo what does this do?
 #include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 #include <nav_msgs/msg/odometry.hpp>
 #include <math.h>
-#include <airsim_interfaces/msg/vel_cmd.hpp>
-#include <airsim_interfaces/srv/set_local_position.hpp>
-#include <airsim_interfaces/srv/set_gps_position.hpp>
-#include <airsim_interfaces/msg/gps_yaw.hpp>
+#include <unavsim_interfaces/msg/vel_cmd.hpp>
+#include <unavsim_interfaces/srv/set_local_position.hpp>
+#include <unavsim_interfaces/srv/set_gps_position.hpp>
+#include <unavsim_interfaces/msg/gps_yaw.hpp>
 #include <geodetic_conv.hpp>
 #include <math_common.h>
 #include <utils.h>
@@ -83,14 +83,14 @@ public:
     PIDPositionController(const std::shared_ptr<rclcpp::Node> nh);
 
     // ROS service callbacks
-    bool local_position_goal_srv_cb(const std::shared_ptr<airsim_interfaces::srv::SetLocalPosition::Request> request, std::shared_ptr<airsim_interfaces::srv::SetLocalPosition::Response> response);
-    bool local_position_goal_srv_override_cb(const std::shared_ptr<airsim_interfaces::srv::SetLocalPosition::Request> request, std::shared_ptr<airsim_interfaces::srv::SetLocalPosition::Response> response);
-    bool gps_goal_srv_cb(const std::shared_ptr<airsim_interfaces::srv::SetGPSPosition::Request> request, std::shared_ptr<airsim_interfaces::srv::SetGPSPosition::Response> response);
-    bool gps_goal_srv_override_cb(const std::shared_ptr<airsim_interfaces::srv::SetGPSPosition::Request> request, std::shared_ptr<airsim_interfaces::srv::SetGPSPosition::Response> response);
+    bool local_position_goal_srv_cb(const std::shared_ptr<unavsim_interfaces::srv::SetLocalPosition::Request> request, std::shared_ptr<unavsim_interfaces::srv::SetLocalPosition::Response> response);
+    bool local_position_goal_srv_override_cb(const std::shared_ptr<unavsim_interfaces::srv::SetLocalPosition::Request> request, std::shared_ptr<unavsim_interfaces::srv::SetLocalPosition::Response> response);
+    bool gps_goal_srv_cb(const std::shared_ptr<unavsim_interfaces::srv::SetGPSPosition::Request> request, std::shared_ptr<unavsim_interfaces::srv::SetGPSPosition::Response> response);
+    bool gps_goal_srv_override_cb(const std::shared_ptr<unavsim_interfaces::srv::SetGPSPosition::Request> request, std::shared_ptr<unavsim_interfaces::srv::SetGPSPosition::Response> response);
 
     // ROS subscriber callbacks
     void airsim_odom_cb(const nav_msgs::msg::Odometry::SharedPtr odom_msg);
-    void home_geopoint_cb(const airsim_interfaces::msg::GPSYaw::SharedPtr gps_msg);
+    void home_geopoint_cb(const unavsim_interfaces::msg::GPSYaw::SharedPtr gps_msg);
 
     void update_control_cmd_timer_cb();
 
@@ -117,24 +117,24 @@ private:
     XYZYaw curr_error_;
 
     bool has_home_geo_;
-    airsim_interfaces::msg::GPSYaw gps_home_msg_;
+    unavsim_interfaces::msg::GPSYaw gps_home_msg_;
 
     nav_msgs::msg::Odometry curr_odom_;
-    airsim_interfaces::msg::VelCmd vel_cmd_;
+    unavsim_interfaces::msg::VelCmd vel_cmd_;
     bool reached_goal_;
     bool has_goal_;
     bool has_odom_;
     bool got_goal_once_;
     // todo check for odom msg being older than n sec
 
-    rclcpp::Publisher<airsim_interfaces::msg::VelCmd>::SharedPtr airsim_vel_cmd_world_frame_pub_;
+    rclcpp::Publisher<unavsim_interfaces::msg::VelCmd>::SharedPtr airsim_vel_cmd_world_frame_pub_;
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr airsim_odom_sub_;
-    rclcpp::Subscription<airsim_interfaces::msg::GPSYaw>::SharedPtr home_geopoint_sub_;
+    rclcpp::Subscription<unavsim_interfaces::msg::GPSYaw>::SharedPtr home_geopoint_sub_;
 
-    rclcpp::Service<airsim_interfaces::srv::SetLocalPosition>::SharedPtr local_position_goal_srvr_;
-    rclcpp::Service<airsim_interfaces::srv::SetLocalPosition>::SharedPtr local_position_goal_override_srvr_;
-    rclcpp::Service<airsim_interfaces::srv::SetGPSPosition>::SharedPtr gps_goal_srvr_;
-    rclcpp::Service<airsim_interfaces::srv::SetGPSPosition>::SharedPtr gps_goal_override_srvr_;
+    rclcpp::Service<unavsim_interfaces::srv::SetLocalPosition>::SharedPtr local_position_goal_srvr_;
+    rclcpp::Service<unavsim_interfaces::srv::SetLocalPosition>::SharedPtr local_position_goal_override_srvr_;
+    rclcpp::Service<unavsim_interfaces::srv::SetGPSPosition>::SharedPtr gps_goal_srvr_;
+    rclcpp::Service<unavsim_interfaces::srv::SetGPSPosition>::SharedPtr gps_goal_override_srvr_;
 
     rclcpp::TimerBase::SharedPtr update_control_cmd_timer_;
 };
