@@ -1,6 +1,6 @@
 #include <airsim_ros_wrapper.h>
 #include "common/AirSimSettings.hpp"
-#include <tf2_sensor_msgs/tf2_sensor_msgs.hpp>
+#include <tf2_sensor_msgs/tf2_sensor_msgs.h>
 
 using namespace std::placeholders;
 
