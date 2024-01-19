@@ -52,15 +52,16 @@ class MIMIRrecorder:
         # Find the package's share directory
         package_dir = get_package_share_directory('unavsim_ros_pkgs')
         # Construct the paths to the config files
-        recorder_config_path = os.path.join(package_dir, 'config', 'recorder_config.json')
-        settings_path = os.path.join(package_dir, 'config', 'settings.json')
+        recorder_config_path = os.path.join(package_dir, 'config')
+        settings_path = os.path.join(package_dir, 'config')
         # CONNECTION TO AIRSIM 
         self.client = client
+        self.ini_time_ns = time.time_ns()
 
 
         self.create_dataset = create_dataset
-        self.config   = self.loadJSON(recorder_config_path)
-        self.settings = self.loadJSON(settings_path)
+        self.config   = self.loadJSON(os.path.join(recorder_config_path, 'recorder_config.json'))
+        self.settings = self.loadJSON(os.path.join(settings_path, 'settings.json'))
 
         # Create path
         vehicle_list = list(self.settings["Vehicles"].keys())
@@ -80,27 +81,34 @@ class MIMIRrecorder:
         label_dict = self.setSegmentation(self.config["SegmentationIDs"])
 
         # Save configuration into dataset
-        self.saveJSONtoDataset(inputpath=os.getcwd(), filename='config.json', outputpath= self.DATASET_TRACK)
-        self.saveJSONtoDataset(inputpath=os.getcwd(), filename='settings.json', outputpath= self.DATASET_TRACK)
+        self.saveJSONtoDataset(inputpath=recorder_config_path, filename='recorder_config.json', outputpath= self.DATASET_TRACK)
+        self.saveJSONtoDataset(inputpath=settings_path, filename='settings.json', outputpath= self.DATASET_TRACK)
         self.saveJSONtoDataset(inputpath=None, data=label_dict,filename='segmentation.json', outputpath= self.DATASET_TRACK)
 
         self.saveIntrinsics(vehicle_list,cameras_list,sensors=["rgb","depth","segmentation", "imu0"])
 
     def setSegmentation(self, label_dict):
+        # Create a list to store keys that need to be modified or removed
+        to_modify = []
+
         for objectname, segmentationID in label_dict.items():
             success = self.client.simSetSegmentationObjectID("[\w]*"+objectname+"[\w]*", segmentationID, True)
+
+            # Instead of modifying the dictionary, add the changes to the list
             if "SM_KI-84" in objectname:
-                label_dict["Airplane"] = label_dict[objectname]
-                del label_dict[objectname]
+                to_modify.append(("Airplane", objectname))
             if "InstancedFoliageActor" in objectname:
-                label_dict["Seaweed"] = label_dict[objectname]
-                del label_dict[objectname]
+                to_modify.append(("Seaweed", objectname))
             if "SM_Sub" in objectname:
-                label_dict["Submarine"] = label_dict[objectname]
-                del label_dict[objectname]
+                to_modify.append(("Submarine", objectname))
             if "rock" in objectname:
-                label_dict["Rock"] = label_dict[objectname]
-                del label_dict[objectname]
+                to_modify.append(("Rock", objectname))
+
+        # Apply the changes after iteration
+        for new_key, old_key in to_modify:
+            label_dict[new_key] = label_dict[old_key]
+            del label_dict[old_key]
+
 
 
 
@@ -281,7 +289,12 @@ class MIMIRrecorder:
 
 
     def getAirsimTimeStamp(self):
-        return self.client.getMultirotorState().timestamp
+        try:
+            ts = self.client.getRovState().timestamp
+        except:
+            ts = self.ini_time_ns + int((1/self.rate_divider) * 1e9)
+
+        return ts
 
 
 
@@ -472,8 +485,8 @@ if __name__ == '__main__':
     # wait for the mission to complete
     i = 0
     while (True):
-        if i == 30:
-            break # testing stuff        
+        # if i == 30:
+        #     break # testing stuff        
 
         # capture data here        
         x.captureDataAndPauseSimulation(i%x.rate_divider)

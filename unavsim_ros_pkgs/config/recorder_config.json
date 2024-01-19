@@ -1,6 +1,6 @@
 {
     "dataset_base_name": "MIMIR",
-    "dataset_base_path": "/Datasets",
+    "dataset_base_path": "/home/freyja",
     "map_name": "Test",
     "track_name": "0",
     "distortion_coeffs":{ 

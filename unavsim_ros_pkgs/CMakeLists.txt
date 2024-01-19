@@ -119,7 +119,7 @@ install(TARGETS airsim_ros pd_position_controller_simple
 
 install(FILES README.md DESTINATION share/${PROJECT_NAME})
 
-install(DIRECTORY launch rviz DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY launch config rviz DESTINATION share/${PROJECT_NAME})
 
 
 
