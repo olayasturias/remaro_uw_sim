@@ -24,7 +24,7 @@ find_package(rosidl_default_runtime REQUIRED)
 find_package(unavsim_interfaces REQUIRED)
 find_package(OpenCV REQUIRED)
 
-set(AIRSIM_ROOT $ENV{HOME}/dev/UNav-Sim)
+set(AIRSIM_ROOT $ENV{HOME}/Underwater_Simulator/UNav-Sim)
 
 
 add_subdirectory("${AIRSIM_ROOT}/cmake/rpclib_wrapper" rpclib_wrapper)
