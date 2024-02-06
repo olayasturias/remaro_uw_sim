@@ -292,7 +292,7 @@ class MIMIRrecorder:
         try:
             ts = self.client.getRovState().timestamp
         except:
-            ts = self.ini_time_ns + int((1/self.rate_divider) * 1e9)
+            ts = time.time_ns()
 
         return ts
 
@@ -436,26 +436,26 @@ class MIMIRrecorder:
 
             # get images from AirSim API
             left_rgb, left_depth, left_seg = self.requestSingleCamera("front_left")
-            right_rgb, right_depth, right_seg= self.requestSingleCamera("front_right")
-            bottom_rgb, bottom_depth, bottom_seg= self.requestSingleCamera("bottom_center")
+            # right_rgb, right_depth, right_seg= self.requestSingleCamera("front_right")
+            # bottom_rgb, bottom_depth, bottom_seg= self.requestSingleCamera("bottom_center")
             left_saved = self.convertnSave(stamp,"front_left",left_rgb,left_depth,left_seg)
-            right_saved = self.convertnSave(stamp,"front_right",right_rgb,right_depth,right_seg)
-            bottom_saved = self.convertnSave(stamp,"bottom_center",bottom_rgb,bottom_depth,bottom_seg)
+            # right_saved = self.convertnSave(stamp,"front_right",right_rgb,right_depth,right_seg)
+            # bottom_saved = self.convertnSave(stamp,"bottom_center",bottom_rgb,bottom_depth,bottom_seg)
 
 
             
             # check if image contains data, repeat request if empty
-            if left_saved and right_saved and bottom_saved:
+            if left_saved:# and right_saved and bottom_saved:
                 break  # end of do while loop
             else:
                 loopcount += 1
-                print(f"left imgs saved: {left_saved}, right imgs saved:{right_saved}, bottom imgs saved: {bottom_saved}" )
+                print(f"left imgs saved: {left_saved}")# , right imgs saved:{right_saved}, bottom imgs saved: {bottom_saved}" )
                 print("airsim returned empty image." + str(loopcount)) 
 
     # capture Image and Gate Data
     def captureDataAndPauseSimulation(self, rate_handler):
         # Pause simulation to capture image and current data
-        self.client.simPause(True)
+        self.client.simPause(False)
         # generate an unique name of the image
         stamp = self.getAirsimTimeStamp() 
         # measure processing time

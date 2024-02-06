@@ -2,7 +2,6 @@
     "SeeDocsAt": "https://github.com/Microsoft/AirSim/blob/master/docs/settings.md",
     "SettingsVersion": 1.2,
     "SimMode": "Rov",
-    "ViewMode": "NoDisplay",
     "EnableCollisionPassthrogh": true,
     "PawnPaths": {
         "DefaultQuadrotor": {"PawnBP": "Class'/AirSim/Blueprints/BP_FlyingPawn.BP_FlyingPawn_C'"},
@@ -60,84 +59,9 @@
                       "Pitch": -15.0,
                       "Roll": 0.0,
                       "Yaw": 0.0
-          },
-  
-        "front_right": {
-          "CaptureSettings": [
-            {
-              "PublishToRos": 0,
-                "ImageType": 0,
-                "Width": 720,
-                "Height": 540,
-                "FOV_Degrees": 110,
-                "AutoExposureSpeed": 100,
-                "AutoExposureBias": 0,
-                "AutoExposureMaxBrightness": 1,
-                "AutoExposureMinBrightness": 1,
-                "MotionBlurAmount": 0,
-                "TargetGamma": 1
-            },
-            {
-              "PublishToRos": 0,
-              "ImageType": 1,
-              "Width": 720,
-              "Height": 540,
-              "FOV_Degrees": 110
-            },
-            {
-              "PublishToRos": 0,
-              "ImageType": 5,
-              "Width": 720,
-              "Height": 540,
-              "FOV_Degrees": 110
-            }
-          ],
-          "X": 0.45,
-          "Y": 0.06,
-          "Z": 0.0,
-          "Pitch": -15.0,
-          "Roll": 0.0,
-          "Yaw": 0.0
-        },
-  
-  
-      "bottom_center": {
-        "CaptureSettings": [
-          {
-            "PublishToRos": 0,
-              "ImageType": 0,
-              "Width": 720,
-              "Height": 540,
-              "FOV_Degrees": 110,
-              "AutoExposureSpeed": 100,
-              "AutoExposureBias": 0,
-              "AutoExposureMaxBrightness": 1,
-              "AutoExposureMinBrightness": 1,
-              "MotionBlurAmount": 0,
-              "TargetGamma": 1
-          },
-          {
-            "PublishToRos": 0,
-            "ImageType": 1,
-            "Width": 720,
-            "Height": 540,
-            "FOV_Degrees": 110
-          },
-          {
-            "PublishToRos": 0,
-            "ImageType": 5,
-            "Width": 720,
-            "Height": 540,
-            "FOV_Degrees": 110
           }
-        ],
-        "X": 0.0,
-        "Y": 0.0,
-        "Z": 0.2,
-        "Pitch": 270.0,
-        "Roll": 0.0,
-        "Yaw": 0.0
-      }
+  
+        
     },
   
         "Sensors": {
